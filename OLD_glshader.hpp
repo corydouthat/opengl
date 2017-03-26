@@ -105,10 +105,13 @@ GLuint InitShaderProgram(const GLchar* vshd_src, const GLchar* fshd_src)
     shader_prog_id = glCreateProgram();
     glAttachShader(shader_prog_id, vshd_id);
     glAttachShader(shader_prog_id, fshd_id);
-    glBindFragDataLocation(shader_prog_id,0,"color_out");
+    //glBindFragDataLocation(shader_prog_id,0,"color_out");
     glLinkProgram(shader_prog_id);
     if (!CheckShaderProgram(shader_prog_id))
         return 0;
+
+	glDeleteShader(vshd_id);
+	glDeleteShader(fshd_id);
 
 	return shader_prog_id;
 }
