@@ -1,5 +1,5 @@
 // *****************************************************************************************************************************
-// glshader.hpp
+// gl_shader.hpp
 // OpenGL Rendering
 // GLSL shader code strings
 // Author: Cory Douthat
