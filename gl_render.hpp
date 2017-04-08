@@ -84,7 +84,7 @@ void RendSetViewport(GLFWwindow* window)
 
 // Load Texture
 // Return: Texture ID created
-GLuint RendLoadTexture(GLuint shd_prog, const char* path)
+GLuint RendLoadTexture(const char* path)
 {
 	// TODO: Switch to another image loader that does not invert y-axis.
 	// Unofficial OpenGL SDK or DevIL
@@ -104,6 +104,13 @@ GLuint RendLoadTexture(GLuint shd_prog, const char* path)
 		// TODO: Add arguments to this function if needed to define below parameters
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Parameters
+		// TODO: Are these always applicable?
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// Cleanup
 		SOIL_free_image_data(image);
