@@ -106,8 +106,8 @@ void Mesh<T>::setupMesh()
 template <typename T = float>
 void Mesh<T>::Draw(GLuint shader_id)
 {
-	GLuint diffuseNr = 1;
-	GLuint specularNr = 1;
+	GLuint diffuse_num = 0;
+	GLuint specular_num = 0;
 	for (GLuint i = 0; i < this->textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // Activate proper texture unit before binding
@@ -116,14 +116,20 @@ void Mesh<T>::Draw(GLuint shader_id)
 		std::string number;
 		std::string name = this->textures[i].type;
 		if (name == "texture_diffuse")
-			ss << diffuseNr++; // Transfer GLuint to stream
+			ss << "[" << ++diffuse_num << "]"; // Transfer GLuint to stream
 		else if (name == "texture_specular")
-			ss << specularNr++; // Transfer GLuint to stream
+			ss << "[" << ++specular_num << "]"; // Transfer GLuint to stream
 		number = ss.str();
 
 		glUniform1f(glGetUniformLocation(shader_id, ("material." + name + number).c_str()), float(i));
+
 		glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
 	}
+
+	// Set number of diffuse and specular textures
+	glUniform1ui(glGetUniformLocation(shader_id, "material.num_tex_diffuse"), diffuse_num);
+	glUniform1ui(glGetUniformLocation(shader_id, "material.num_tex_specular"), specular_num);
+
 	glActiveTexture(GL_TEXTURE0);
 
 	// Draw mesh

@@ -62,7 +62,7 @@ template <typename T = float>
 void Model<T>::loadModel(std::string path)
 {
 	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -143,6 +143,12 @@ Mesh<T> Model<T>::processMesh(aiMesh* mesh, const aiScene* scene)
 		std::vector<Texture> specularMaps = this->loadMaterialTextures(material,
 			aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
+		// Limited support for multiple diffuse or specular textures
+		if (diffuseMaps.size() > 1)
+			fprintf(stderr, "Multiple diffuse maps loaded for this mesh, but may not be fully supported");
+		if (specularMaps.size() > 1)
+			fprintf(stderr, "Multiple specular maps loaded for this mesh, but may not be fully supported");
 	}
 
 	return Mesh<T>(vertices, indices, textures);

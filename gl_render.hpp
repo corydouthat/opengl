@@ -27,7 +27,9 @@
 #include "vec.hpp"
 #include "mat.hpp"
 
-#include "soil.h"
+//#include "soil.h"
+#include "lodepng.h"
+#include "lodepng.cpp"
 
 //#include "gl_shader.hpp"
 
@@ -86,42 +88,43 @@ void RendSetViewport(GLFWwindow* window)
 // Return: Texture ID created
 GLuint RendLoadTexture(const char* path)
 {
-	// TODO: Switch to another image loader that does not invert y-axis.
-	// Unofficial OpenGL SDK or DevIL
-
 	GLuint tex_id;
-	int width, height;
-	unsigned char* image;
+	unsigned int width, height;
+	std::vector<unsigned char> image;
+	unsigned int error;
 
 	// Load Image
-	image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGB);
-	if (image)
+	error = lodepng::decode(image, width, height, path);
+	//if (image)
+	if (error == 0)
 	{
 		// Generate and Bind OpenGL Texture
 		glGenTextures(1, &tex_id);
 		glBindTexture(GL_TEXTURE_2D, tex_id);
 
 		// TODO: Add arguments to this function if needed to define below parameters
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+		// lodepng appears to always produce a 4-byte RGBA output?
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		// Parameters
 		// TODO: Are these always applicable?
+		// TODO: Check if texture is square and disable MIPMAP if not (also anything else to consider?)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// Cleanup
-		SOIL_free_image_data(image);
+		//SOIL_free_image_data(image);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		return tex_id;
 	}
 	else
 	{
-		fprintf(stderr, "Could not load texture image\n");
-		
+		//fprintf(stderr, "Could not load texture image\n");
+		std::cout << "lodepng error " << error << ": " << lodepng_error_text(error) << std::endl;
 		return 0;
 	}
 }
