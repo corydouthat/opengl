@@ -48,14 +48,14 @@ private:
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
 	Model(GLchar* path) { this->loadModel(path); };
-	void Draw(GLuint shader_id);
+	void draw(GLuint shader_id);
 };
 
 template <typename T = float>
-void Model<T>::Draw(GLuint shader_id)
+void Model<T>::draw(GLuint shader_id)
 {
 	for (GLuint i = 0; i < this->meshes.size(); i++)
-		this->meshes[i].Draw(shader_id);
+		this->meshes[i].draw(shader_id);
 }
 
 template <typename T = float>

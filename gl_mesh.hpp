@@ -61,7 +61,7 @@ public:
 	std::vector<Texture> textures;
 
 	Mesh(std::vector <Vertex<T>> vertices, std::vector<GLuint> indices, std::vector<Texture> textures);
-	void Draw(GLuint shader_id);
+	void draw(GLuint shader_id);
 };
 
 template <typename T = float>
@@ -104,7 +104,7 @@ void Mesh<T>::setupMesh()
 
 // TODO: use array im shader for texture uniforms instead of named?
 template <typename T = float>
-void Mesh<T>::Draw(GLuint shader_id)
+void Mesh<T>::draw(GLuint shader_id)
 {
 	GLuint diffuse_num = 0;
 	GLuint specular_num = 0;
