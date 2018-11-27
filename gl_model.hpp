@@ -62,7 +62,7 @@ template <typename T = float>
 void Model<T>::loadModel(std::string path)
 {
 	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals);
+	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals /*| aiProcess_FixInfacingNormals*/);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -113,7 +113,7 @@ Mesh<T> Model<T>::processMesh(aiMesh* mesh, const aiScene* scene)
 		vector.z = mesh->mNormals[i].z;
 		vertex.norm = vector;
 
-		if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
+		if (mesh->mTextureCoords[0]) // Check for texture coordinates
 		{
 			Vec2<T> vec;
 			vec.x = mesh->mTextureCoords[0][i].x;

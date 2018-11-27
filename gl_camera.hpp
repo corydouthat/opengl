@@ -244,7 +244,7 @@ void Camera<T>::revolveV(T angle)
 {
 	Mat3<T> rot_mat = Mat3<T>::rot(-angle, getCamRight());
 	Vec3<T> t_dir = rot_mat * getCamDir();
-	pos = target + t_dir;
+	pos = target + t_dir * (pos - target).len();
 
 	cam_dir_valid = cam_right_valid = cam_up_valid = lookat_valid = false;
 }
@@ -256,7 +256,7 @@ void Camera<T>::revolveH(T angle)
 {
 	Mat3<T> rot_mat = Mat3<T>::rot(angle, getCamUp());
 	Vec3<T> t_dir = rot_mat * getCamDir();
-	pos = target + t_dir;
+	pos = target + t_dir * (pos - target).len();
 
 	cam_dir_valid = cam_right_valid = cam_up_valid = lookat_valid = false;
 }
@@ -301,7 +301,7 @@ void Camera<T>::tilt(T angle)
 {
 	Mat3<T> rot_mat = Mat3<T>::rot(angle, getCamRight());
 	Vec3<T> t_dir = rot_mat * -getCamDir();
-	target = pos + t_dir;
+	target = pos + t_dir * (target - pos).len();
 
 	cam_dir_valid = cam_right_valid = cam_up_valid = lookat_valid = false;
 }
@@ -313,7 +313,7 @@ void Camera<T>::pan(T angle)
 {
 	Mat3<T> rot_mat = Mat3<T>::rot(-angle, getCamUp());
 	Vec3<T> t_dir = rot_mat * -getCamDir();
-	target = pos + t_dir;
+	target = pos + t_dir * (target - pos).len();
 
 	cam_dir_valid = cam_right_valid = cam_up_valid = lookat_valid = false;
 }
