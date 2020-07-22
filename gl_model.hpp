@@ -51,14 +51,14 @@ public:
 	void draw(GLuint shader_id);
 };
 
-template <typename T = float>
+template <typename T>
 void Model<T>::draw(GLuint shader_id)
 {
 	for (GLuint i = 0; i < this->meshes.size(); i++)
 		this->meshes[i].draw(shader_id);
 }
 
-template <typename T = float>
+template <typename T>
 void Model<T>::loadModel(std::string path)
 {
 	Assimp::Importer import;
@@ -74,7 +74,7 @@ void Model<T>::loadModel(std::string path)
 	this->processNode(scene->mRootNode, scene);
 }
 
-template <typename T = float>
+template <typename T>
 void Model<T>::processNode(aiNode* node, const aiScene* scene)
 {
 	// Process all the node's meshes (if any)
@@ -90,7 +90,7 @@ void Model<T>::processNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-template <typename T = float>
+template <typename T>
 Mesh<T> Model<T>::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<Vertex<T>> vertices;
@@ -154,7 +154,7 @@ Mesh<T> Model<T>::processMesh(aiMesh* mesh, const aiScene* scene)
 	return Mesh<T>(vertices, indices, textures);
 }
 
-template <typename T = float>
+template <typename T>
 std::vector<Texture> Model<T>::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;

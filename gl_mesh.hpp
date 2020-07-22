@@ -64,7 +64,7 @@ public:
 	void draw(GLuint shader_id);
 };
 
-template <typename T = float>
+template <typename T>
 Mesh<T>::Mesh(std::vector<Vertex<T>> vertices, std::vector<GLuint> indices, std::vector<Texture> textures)
 {
 	this->vertices = vertices;
@@ -74,7 +74,7 @@ Mesh<T>::Mesh(std::vector<Vertex<T>> vertices, std::vector<GLuint> indices, std:
 	this->setupMesh();
 }
 
-template <typename T = float>
+template <typename T>
 void Mesh<T>::setupMesh()
 {
 	glGenVertexArrays(1, &this->VAO);
@@ -103,7 +103,7 @@ void Mesh<T>::setupMesh()
 }
 
 // TODO: use array im shader for texture uniforms instead of named?
-template <typename T = float>
+template <typename T>
 void Mesh<T>::draw(GLuint shader_id)
 {
 	GLuint diffuse_num = 0;
