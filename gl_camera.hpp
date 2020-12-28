@@ -80,7 +80,7 @@ Camera<T>::Camera()
 // t = target
 // up = up vector (world)
 template <typename T>
-Camera<T>::Camera(Vec3<T> p = Vec3<T>(0, 0, 1), Vec3<T> t = Vec3<T>(0, 0, 0), Vec3<T> up = Vec3<T>(0, 1, 0))
+Camera<T>::Camera(Vec3<T> p, Vec3<T> t, Vec3<T> up)
 {
 	pos = p;
 	target = t;
