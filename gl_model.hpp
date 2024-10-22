@@ -47,7 +47,7 @@ private:
 	Mesh<T> processMesh(aiMesh* mesh, const aiScene* scene);
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
-	Model(GLchar* path) { this->loadModel(path); };
+	Model(const GLchar* path) { this->loadModel(path); };
 	void draw(GLuint shader_id);
 };
 
