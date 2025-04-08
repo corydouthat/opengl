@@ -1,0 +1,5 @@
+10/20/2024 - Some of these should probably be moved and made submodules of my opengl library
+
+10/20/2024 - glew is weird and requires a third-party cmake version - is there a replacement?
+
+10/20/2024 - SOIL is ancient and no longer supported

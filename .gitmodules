@@ -1,0 +1,18 @@
+[submodule "dependencies/libraries"]
+	path = dependencies/libraries
+	url = https://github.com/corydouthat/libraries.git
+[submodule "dependencies/assimp"]
+	path = dependencies/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "dependencies/glew-cmake"]
+	path = dependencies/glew-cmake
+	url = https://github.com/Perlmint/glew-cmake
+[submodule "dependencies/glfw"]
+	path = dependencies/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "dependencies/soil"]
+	path = dependencies/soil
+	url = https://github.com/paralin/soil.git
+[submodule "dependencies/source/lodepng"]
+	path = dependencies/source/lodepng
+	url = https://github.com/lvandeve/lodepng.git
