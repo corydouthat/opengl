@@ -4,7 +4,14 @@ project(opengl LANGUAGES C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 
 if (NOT TARGET opengl)
-	add_library(opengl INTERFACE)
+	add_library(opengl INTERFACE
+		#including files here will force Visual Studio to show library
+		gl_camera.hpp
+		gl_mesh.hpp
+		gl_model.hpp
+		gl_render.hpp
+		gl_shader.hpp
+	)
 endif()
 
 add_definitions(-DGLEW_STATIC)
@@ -31,6 +38,7 @@ target_link_libraries(opengl
 
 # Add include directories
 target_include_directories(opengl INTERFACE .)
+target_include_directories(opengl INTERFACE dependencies/source/lodepng)
 
 # Example to include a local main function to test building the library
 #add_executable(opengl-testbench main.cpp)
